@@ -47,7 +47,7 @@ class SocialMediaDownloader:
             if text_ar and len(text_ar)>3: texts.append("🔤 عربي: "+text_ar)
             if text_en and len(text_en)>3: texts.append("🔤 English: "+text_en)
         cap.release()
-        return "📝 نص مستخرج:
+       return "📝 نص مستخرج:" 
 "+ "
 
 ".join(dict.fromkeys(texts)) if texts else "ℹ️ لا يوجد نص واضح"
