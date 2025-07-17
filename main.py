@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 # الطريقة الأكيدة لقراءة التوكن
-BOT_TOKEN = os.getenv('BOT_TOKEN') or "7878923171:AAFLPxjgE31ohSx-r8RewQcy7O8kP73OH9k"
+BOT_TOKEN = os.getenv('BOT_TOKEN') or "7878923171:AAECMA13-eO_zS7b-GocbbKlCN3PXJi_5g0"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🎉 البوت يعمل الآن!")
