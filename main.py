@@ -1,44 +1,18 @@
 import os
-from telegram.ext import Application, CommandHandler, MessageHandler, filters
 from telegram import Update
-from telegram.ext import ContextTypes
-import requests
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
+# الطريقة الأكيدة لقراءة التوكن
+BOT_TOKEN = os.getenv('BOT_TOKEN') or "7878923171:AAFLPxjgE31ohSx-r8RewQcy7O8kP73OH9k"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("أهلًا بك! أرسل لي رابطًا من أي منصة وسأعطيك رابط التحميل 🎬")
+    await update.message.reply_text("🎉 البوت يعمل الآن!")
 
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    url = update.message.text
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(f"📩: {update.message.text}")
 
-    # تحقق إذا الرسالة رابط
-    if not url.startswith("http"):
-        await update.message.reply_text("❌ أرسل رابطًا صحيحًا من تيك توك أو يوتيوب أو إنستغرام...")
-        return
-
-    # رابط API خارجي لتحميل الفيديوهات
-    api_url = f"https://save-from.net/api/convert?url={url}"
-
-    try:
-        response = requests.get(api_url)
-        data = response.json()
-
-        if 'url' in data and data['url']:
-            download_link = data['url']
-            await update.message.reply_text(f"📝 نص مستخرج:\n{download_link}")
-        else:
-            await update.message.reply_text("❌ لم أستطع استخراج الرابط، جرب رابط آخر.")
-    except Exception as e:
-        await update.message.reply_text("❌ حدث خطأ أثناء المعالجة.")
-        print(f"Error: {e}")
-
-def main():
-    app = Application.builder().token(BOT_TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-    print("Bot is polling...")
-    app.run_polling()
-
-if __name__ == "__main__":
-    main()
+app = Application.builder().token(BOT_TOKEN).build()
+app.add_handler(CommandHandler("start", start))
+app.add_handler(MessageHandler(filters.TEXT, echo))
+print("✅ تم التشغيل بنجاح")
+app.run_polling()
